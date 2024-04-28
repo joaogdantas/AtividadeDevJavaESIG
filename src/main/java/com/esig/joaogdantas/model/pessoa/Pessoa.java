@@ -1,36 +1,40 @@
-package com.esig.joaogdantas;
+package com.esig.joaogdantas.model.pessoa;
 
-import com.esig.joaogdantas.model.Cargo.Cargo;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.esig.joaogdantas.model.cargo.Cargo;
 
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity(name = "pessoa")
 @Table(name = "pessoa")
 public class Pessoa {
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
-    @Column(name = "Nome")
+    @Column(name = "nome")
     private String nome;
-    @Column(name = "Cidade")
+    @Column(name = "cidade")
     private String cidade;
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
-    @Column(name = "CEP")
+    @Column(name = "cep")
     private String cep;
-    @Column(name = "Endereco")
+    @Column(name = "endereco")
     private String endereco;
-    @Column(name = "Pais")
+    @Column(name = "pais")
     private String pais;
-    @Column(name = "Usuario")
+    @Column(name = "usuario")
     private String usuario;
-    @Column(name = "Telefone")
+    @Column(name = "telefone")
     private String telefone;
-    @Column(name = "Data_Nascimento")
+    @Column(name = "data_nascimento")
     private Date data_Nascimento;
-    @Column(name = "Cargo_ID")
+    @OneToOne
+    @JoinColumn(name = "id_cargo", referencedColumnName = "id")
     private Cargo cargo;
 
     public Pessoa() {
