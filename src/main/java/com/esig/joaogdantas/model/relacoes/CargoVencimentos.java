@@ -6,6 +6,8 @@ import com.esig.joaogdantas.model.vencimentos.Vencimentos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -15,16 +17,12 @@ import jakarta.persistence.Transient;
 public class CargoVencimentos {
 	@Column(name = "id", nullable = false, unique = true)
     private Integer id;
-	@OneToOne
-	@Transient
+	@ManyToOne
+    @JoinColumn(name = "cargo_id")
     private Cargo cargo;
-	@OneToOne
-    @Transient
-    private Vencimentos vencimentos;
-	@Column(name = "cargo_id", nullable = false)
-    private Integer cargoId;
-	@Column(name = "vencimento_id", nullable = false)
-    private Integer vencimentoId;
+	@ManyToOne
+    @JoinColumn(name = "vencimento_id")
+    private Vencimentos vencimento;
 
 	public CargoVencimentos() {
 	}
@@ -32,7 +30,7 @@ public class CargoVencimentos {
 	public CargoVencimentos(Integer id, Cargo cargo, Vencimentos vencimentos) {
 		this.id = id;
 		this.cargo = cargo;
-		this.vencimentos = vencimentos;
+		this.vencimento = vencimentos;
 	}
 
 	public Integer getId() {
@@ -52,28 +50,10 @@ public class CargoVencimentos {
 	}
 
 	public Vencimentos getVencimentos() {
-		return vencimentos;
+		return vencimento;
 	}
 
 	public void setVencimentos(Vencimentos vencimentos) {
-		this.vencimentos = vencimentos;
+		this.vencimento = vencimentos;
 	}
-
-	public Integer getCargoId() {
-		return cargoId;
-	}
-
-	public void setCargoId(Integer cargoId) {
-		this.cargoId = cargoId;
-	}
-
-	public Integer getVencimentoId() {
-		return vencimentoId;
-	}
-
-	public void setVencimentoId(Integer vencimentoId) {
-		this.vencimentoId = vencimentoId;
-	}
-
-
 }

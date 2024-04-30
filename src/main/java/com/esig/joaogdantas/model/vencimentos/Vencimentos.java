@@ -1,9 +1,12 @@
 package com.esig.joaogdantas.model.vencimentos;
 
+import java.util.List;
+
 import com.esig.joaogdantas.model.relacoes.CargoVencimentos;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -18,8 +21,8 @@ public class Vencimentos {
     private Float valor;
     @Column(name = "tipo", nullable = false)
     private TipoVencimento tipo;
-    @OneToOne(mappedBy = "cargo")
-    private CargoVencimentos cargoVencimento;
+    @OneToMany(mappedBy = "vencimentos")
+    List<CargoVencimentos> cargoVencimentos;
     
 	public Vencimentos() {
 	}
@@ -63,11 +66,11 @@ public class Vencimentos {
 		this.tipo = tipo;
 	}
 
-	public CargoVencimentos getCargoVencimento() {
-		return cargoVencimento;
+	public List<CargoVencimentos> getCargoVencimentos() {
+		return cargoVencimentos;
 	}
 
-	public void setCargoVencimento(CargoVencimentos cargoVencimento) {
-		this.cargoVencimento = cargoVencimento;
+	public void setCargoVencimentos(List<CargoVencimentos> cargoVencimentos) {
+		this.cargoVencimentos = cargoVencimentos;
 	}
 }

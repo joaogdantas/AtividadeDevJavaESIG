@@ -1,6 +1,7 @@
 package com.esig.joaogdantas.model.cargo;
 
 import java.util.List;
+import java.util.Set;
 
 import com.esig.joaogdantas.model.pessoa.Pessoa;
 import com.esig.joaogdantas.model.relacoes.*;
@@ -20,8 +21,8 @@ public class Cargo {
     private String nome;
     @OneToMany(mappedBy = "cargo")
     private List<Pessoa> pessoa;
-    @OneToOne(mappedBy = "cargo")
-    private CargoVencimentos cargoVencimento;
+    @OneToMany(mappedBy = "cargo")
+    List<CargoVencimentos> cargoVencimentos;
     
     public Cargo() {
     }
@@ -55,11 +56,13 @@ public class Cargo {
 		this.pessoa = pessoa;
 	}
 
-	public CargoVencimentos getCargoVencimento() {
-		return cargoVencimento;
+	public List<CargoVencimentos> getCargoVencimentos() {
+		return cargoVencimentos;
 	}
 
-	public void setCargoVencimento(CargoVencimentos cargoVencimento) {
-		this.cargoVencimento = cargoVencimento;
+	public void setCargoVencimentos(List<CargoVencimentos> cargoVencimentos) {
+		this.cargoVencimentos = cargoVencimentos;
 	}
+
+	
 }
