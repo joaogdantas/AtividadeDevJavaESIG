@@ -1,28 +1,31 @@
 package com.esig.joaogdantas.model.cargo;
 
 import java.util.List;
-import java.util.Set;
 
 import com.esig.joaogdantas.model.pessoa.Pessoa;
 import com.esig.joaogdantas.model.relacoes.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity(name = "cargo")
 @Table(name = "cargo")
 public class Cargo {
+	@Id
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
-    @Column(name = "nome", nullable = false, length = 255, unique = true)
+	
+    @Column(name = "nome", nullable = false, unique = true, length = 255)
     private String nome;
+    
     @OneToMany(mappedBy = "cargo")
     private List<Pessoa> pessoa;
+    
     @OneToMany(mappedBy = "cargo")
-    List<CargoVencimentos> cargoVencimentos;
+    private List<CargoVencimentos> cargoVencimentos;
     
     public Cargo() {
     }

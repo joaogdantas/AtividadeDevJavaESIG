@@ -2,48 +2,55 @@ package com.esig.joaogdantas.model.pessoa;
 
 import com.esig.joaogdantas.model.cargo.Cargo;
 
-
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity(name = "pessoa")
 @Table(name = "pessoa")
 public class Pessoa {
+	@Id
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
+	
     @Column(name = "nome", nullable = false, length = 255)
     private String nome;
+    
     @Column(name = "cidade", nullable = false, length = 50)
     private String cidade;
-    @Column(name = "email", nullable = false, length = 255)
+    
+    @Column(name = "email", nullable = false, length = 50)
     private String email;
-    @Column(name = "cep", nullable = false, length = 15)
+    
+    @Column(name = "cep", nullable = false, length = 20)
     private String cep;
-    @Column(name = "endereco", nullable = false, length = 512)
+    
+    @Column(name = "endereco", nullable = false, length = 255)
     private String endereco;
+    
     @Column(name = "pais", nullable = false, length = 50)
     private String pais;
-    @Column(name = "usuario", nullable = false, length = 255, unique = true)
-    private String usuario;
-    @Column(name = "telefone", nullable = false, length = 20, unique = true)
-    private String telefone;
-    @Column(name = "data_nascimento", nullable = false, length = 255)
-    private Date dataNascimento;
-    @ManyToOne
-    @Transient
-    private Cargo cargo;
-    @Column(name = "cargo_id", nullable = false)
-    private Integer cargoId;
     
+    @Column(name = "usuario", nullable = false, length = 50)
+    private String usuario;
+    
+    @Column(name = "telefone", nullable = false, length = 20)
+    private String telefone;
+    
+    @Column(name = "data_nascimento", nullable = false, length = 20)
+    private String dataNascimento;
+    
+    @ManyToOne
+    @JoinColumn(name = "cargo_id", referencedColumnName = "id")
+    private Cargo cargo;
+
     public Pessoa() {
     }
 
-    public Pessoa(Integer id, String nome, String cidade, String email, String cep, String endereco, String pais, String usuario, String telefone, Date dataNascimento, Cargo cargo) {
+    public Pessoa(Integer id, String nome, String cidade, String email, String cep, String endereco, String pais, String usuario, String telefone, String dataNascimento, Cargo cargo) {
         this.id = id;
         this.nome = nome;
         this.cidade = cidade;
@@ -129,11 +136,11 @@ public class Pessoa {
 		this.telefone = telefone;
 	}
 
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -141,15 +148,11 @@ public class Pessoa {
 		return cargo;
 	}
 
+	public Integer getCargoId() {
+		return cargo.getId();
+	}
+	
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
-	}
-
-	public Integer getCargoId() {
-		return cargoId;
-	}
-
-	public void setCargoId(Integer cargoId) {
-		this.cargoId = cargoId;
 	}
 }
