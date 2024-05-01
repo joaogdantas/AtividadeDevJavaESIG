@@ -1,25 +1,29 @@
 package com.esig.joaogdantas.service;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import com.esig.joaogdantas.model.cargo.Cargo;
 import com.esig.joaogdantas.model.pessoa.Pessoa;
 import com.esig.joaogdantas.model.relacoes.CargoVencimentos;
 import com.esig.joaogdantas.model.vencimentos.*;
 import com.esig.joaogdantas.repository.CargoVencimentosRepositorio;
 import com.esig.joaogdantas.repository.PessoaRepositorio;
 import com.esig.joaogdantas.repository.PessoaSalarioConsolidadoRepositorio;
+import com.esig.joaogdantas.util.EntityManagerProducer;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 public class PessoaSalarioConsolidadoService implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @PersistenceContext
+    private EntityManager manager;
+    
     @Inject
     private PessoaRepositorio pessoaRepositorio;
     
@@ -31,28 +35,26 @@ public class PessoaSalarioConsolidadoService implements Serializable {
     
     @Transactional
     public Float calcularSalario(Pessoa pessoa) {
+		manager = new EntityManagerProducer().createEntityManager();
+		cargoVencimentosRepositorio = new CargoVencimentosRepositorio(manager);
+
         Float salario = 0.0f;
 
-        List<Integer> vencimentoIds = pessoa.getCargo().getCargoVencimentos().stream()
-                                        .map(cv -> cv.getVencimentos().getId())
-                                        .collect(Collectors.toList());
-
-        Map<Integer, Vencimentos> vencimentosMap = cargoVencimentosRepositorio.findAll().stream()
-                .map(CargoVencimentos::getVencimentos)
-                .collect(Collectors.toMap(Vencimentos::getId, v -> v));
-
-     
-        for (Integer vencimentoId : vencimentoIds) {
-            Vencimentos vencimento = vencimentosMap.get(vencimentoId);
+        Cargo cargo = pessoa.getCargo();
+        if (cargo == null) {
+            return salario;
+        }
+        
+        for (CargoVencimentos cv : cargo.getCargoVencimentos()) {
+            Vencimentos vencimento = cv.getVencimentos();
             if (vencimento != null) {
-                if (vencimento.getTipo() == TipoVencimento.CREDITO) {
+                if ("CREDITO".equals(vencimento.getTipo())) {
                     salario += vencimento.getValor();
-                } else if (vencimento.getTipo() == TipoVencimento.DEBITO) {
+                } else if ("DEBITO".equals(vencimento.getTipo())) {
                     salario -= vencimento.getValor();
                 }
             }
-        }
+        }     
         return salario;
     }
-
 }
