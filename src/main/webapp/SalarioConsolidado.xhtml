@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta charset="UTF-8"/>
+	<title>Pessoas Salários</title>
+
+	<h:outputStylesheet library="joaogdantas" name="style.css" />
+
+	<f:metadata>
+		<f:viewAction action="#{salarioConsolidadoBean.pessoasCadastradas()}" />
+	</f:metadata>
+
+</h:head>
+
+<h:body>
+	<header>
+		<h:graphicImage library="joaogdantas" name="esiglogo.png" />
+	</header>
+
+	<div id="conteudo">
+		<div id="listagem">
+			<p:dataTable var="pessoa_salario_consolidado" value="#{listaPessoasSalariosConsolidados}" paginator="true" rows="10" emptyMessage="">
+				<f:facet name="header">
+					Lista de Pessoas e Salários
+				</f:facet>
+
+				<p:column headerText="Pessoa ID">
+					<h:outputText value="#{pessoa_salario_consolidado.pessoa}"  />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{pessoa_salario_consolidado.pessoaNome}" />
+				</p:column>
+
+				<p:column headerText="Cargo">
+					<h:outputText value="#{pessoa_salario_consolidado.cargo}" />
+				</p:column>
+
+				<p:column headerText="Salario">
+					<h:outputText value="#{pessoa_salario_consolidado.salario}" />
+				</p:column>
+
+				<f:facet name="footer">
+					Dados Fornecidos
+				</f:facet>
+			</p:dataTable>
+		</div>
+		<div id="button">
+			<h:form>
+				<p:messages id="msgs" showDetail="true" />
+				<p:commandButton value="Calcular e Registrar Salários" actionListener="#{salarioConsolidadoBean.calcularERegistrarSalarios()}" />
+			</h:form>
+		</div>
+	</div>
+
+</h:body>
+</html>
