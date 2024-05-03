@@ -4,38 +4,39 @@ import com.esig.joaogdantas.model.cargo.Cargo;
 
 import com.esig.joaogdantas.model.pessoa.Pessoa;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Entity(name = "pessoas_salarios_consolidado")
+@Entity(name = "pessoa_salario_consolidado")
 @Table(name = "pessoa_salario_consolidado")
-public class PessoaSalarioConsolidado { 
-    @Id
-    @OneToOne 
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    private Pessoa pessoa;
-    
-    @Column(name = "nome_pessoa", nullable = false)
-    private String nomePessoa;
-    
-    @OneToOne
-    @JoinColumn(name = "nome_cargo",  referencedColumnName = "nome")
-    private Cargo cargo;
-    
-    @Column(name = "salario", nullable = false)
-    private Float salario;
+public class PessoaSalarioConsolidado {
+	@Id
+	@OneToOne
+	@JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+	private Pessoa pessoa;
+
+	@Column(name = "nome_pessoa")
+	private String nomePessoa;
+
+	@OneToOne
+	@JoinColumn(name = "nome_cargo", referencedColumnName = "nome")
+	private Cargo cargo;
+
+	@Column(name = "salario")
+	private Integer salario;
 
 	public PessoaSalarioConsolidado() {
 	}
 
-	public PessoaSalarioConsolidado(Pessoa pessoa, String nomePessoa, Cargo cargo, Float salario) {
-		super();
+	public PessoaSalarioConsolidado(Pessoa pessoa, String nomePessoa, Cargo cargo, Integer salario) {
 		this.pessoa = pessoa;
 		this.nomePessoa = nomePessoa;
+		this.cargo = cargo;
+		this.salario = salario;
+	}
+
+	public PessoaSalarioConsolidado(Pessoa pessoa, Cargo cargo, Integer salario) {
+		this.pessoa = pessoa;
+		this.nomePessoa = pessoa.getNome();
 		this.cargo = cargo;
 		this.salario = salario;
 	}
@@ -52,7 +53,7 @@ public class PessoaSalarioConsolidado {
 		return pessoa.getNome();
 	}
 
-	public void setNomePessoa() {
+	public void setNomePessoa(String nomePessoa) {
 		this.nomePessoa = pessoa.getNome();
 	}
 
@@ -64,11 +65,11 @@ public class PessoaSalarioConsolidado {
 		this.cargo = cargo;
 	}
 
-	public Float getSalario() {
+	public Integer getSalario() {
 		return salario;
 	}
 
-	public void setSalario(Float salario) {
+	public void setSalario(Integer salario) {
 		this.salario = salario;
 	}
 	

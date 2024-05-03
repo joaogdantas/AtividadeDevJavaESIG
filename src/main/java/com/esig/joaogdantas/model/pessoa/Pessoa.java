@@ -2,18 +2,13 @@ package com.esig.joaogdantas.model.pessoa;
 
 import com.esig.joaogdantas.model.cargo.Cargo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity(name = "pessoa")
 @Table(name = "pessoa")
 public class Pessoa {
 	@Id
-    @Column(name = "id", nullable = false, unique = true)
+	@Column(name = "id", nullable = false, unique = true)
     private Integer id;
 	
     @Column(name = "nome", nullable = false, length = 255)
@@ -63,6 +58,19 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
         this.cargo = cargo;
     }
+
+	public Pessoa(Integer id, String nome, String cidade, String email, String cep, String endereco, String pais, String usuario, String telefone, String dataNascimento, Integer cargoId) {
+		this.id = id;
+		this.nome = nome;
+		this.cidade = cidade;
+		this.email = email;
+		this.cep = cep;
+		this.endereco = endereco;
+		this.pais = pais;
+		this.usuario = usuario;
+		this.telefone = telefone;
+		this.dataNascimento = dataNascimento;
+	}
 
 	public Integer getId() {
 		return id;

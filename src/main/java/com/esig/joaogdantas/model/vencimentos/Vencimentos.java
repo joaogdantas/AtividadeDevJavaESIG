@@ -22,7 +22,7 @@ public class Vencimentos {
     private String descricao;
     
     @Column(name = "valor", nullable = false)
-    private Float valor;
+    private Integer valor;
     
     @Column(name = "tipo", nullable = false, length = 50)
     private String tipo;
@@ -33,7 +33,7 @@ public class Vencimentos {
 	public Vencimentos() {
 	}
 
-	public Vencimentos(Integer id, String descricao, Float valor, String tipo) {
+	public Vencimentos(Integer id, String descricao, Integer valor, String tipo) {
 		this.id = id;
 		this.descricao = descricao;
 		this.valor = valor;
@@ -56,11 +56,11 @@ public class Vencimentos {
 		this.descricao = descricao;
 	}
 
-	public Float getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 
-	public void setValor(Float valor) {
+	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
 
