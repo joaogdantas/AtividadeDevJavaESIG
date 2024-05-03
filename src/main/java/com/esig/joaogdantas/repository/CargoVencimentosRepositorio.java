@@ -8,10 +8,11 @@ import javax.inject.Inject;
 import com.esig.joaogdantas.model.relacoes.CargoVencimentos;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 public class CargoVencimentosRepositorio {
 
-	@Inject
+	@PersistenceContext
 	private EntityManager manager;
 
 	public CargoVencimentosRepositorio() {
