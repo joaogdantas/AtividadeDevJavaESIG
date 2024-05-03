@@ -1,6 +1,7 @@
 package com.esig.joaogdantas.service;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -18,11 +19,18 @@ public class PessoaService implements Serializable {
 
     @Transactional
     public void novaPessoa(Pessoa pessoa) {
-        pessoaRepositorio.save(pessoa);
+        pessoaRepositorio.create(pessoa);
     }
 
     @Transactional
-    public void excluir(Integer id) {
-    	pessoaRepositorio.deleteById(id);
+    public void deletarPessoa(Integer id) {
+    	pessoaRepositorio.delete(id);
+    }
+
+    public void atualizarPessoa(Integer id) {
+        Optional<Pessoa> registroPessoa = pessoaRepositorio.findById(id);
+        if (registroPessoa.isPresent()) {
+            pessoaRepositorio.update(registroPessoa.get());
+        }
     }
 }
