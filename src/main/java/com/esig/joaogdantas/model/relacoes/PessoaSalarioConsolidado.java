@@ -50,11 +50,11 @@ public class PessoaSalarioConsolidado {
 	}
 
 	public String getNomePessoa() {
-		return pessoa.getNome();
+		return nomePessoa;
 	}
 
 	public void setNomePessoa(String nomePessoa) {
-		this.nomePessoa = pessoa.getNome();
+		this.nomePessoa = nomePessoa;
 	}
 
 	public Cargo getCargo() {
@@ -72,6 +72,4 @@ public class PessoaSalarioConsolidado {
 	public void setSalario(Integer salario) {
 		this.salario = salario;
 	}
-	
-
 }
