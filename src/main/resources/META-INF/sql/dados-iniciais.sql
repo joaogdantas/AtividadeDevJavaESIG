@@ -3031,7 +3031,3 @@ INSERT INTO cargo_vencimentos (cargo_id, id, vencimento_id) VALUES ('5', '12', '
 INSERT INTO cargo_vencimentos (cargo_id, id, vencimento_id) VALUES ('5', '13', '9');
 INSERT INTO cargo_vencimentos (cargo_id, id, vencimento_id) VALUES ('5', '14', '8');
 INSERT INTO cargo_vencimentos (cargo_id, id, vencimento_id) VALUES ('5', '15', '7');
-
-INSERT INTO pessoa_salario_consolidado (pessoa_id, salario, nome_cargo, nome_pessoa) VALUES ('1', '639', 'Tecnico', 'Murilo Azevedo');
-INSERT INTO pessoa_salario_consolidado (pessoa_id, salario, nome_cargo, nome_pessoa) VALUES ('2', '400', 'Estagiario', 'Júlia Sousa');
-INSERT INTO pessoa_salario_consolidado (pessoa_id, salario, nome_cargo, nome_pessoa) VALUES ('3', '7133', 'Gerente', 'Livia Rocha');

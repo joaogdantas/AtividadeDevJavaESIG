@@ -26,26 +26,29 @@ public class PessoaSalarioConsolidadoService implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext
-    private EntityManager manager;
+    @Inject
+    private EntityManager entityManager;
 
     @Inject
     private PessoaSalarioConsolidado pessoaSalarioConsolidado;
 
     @Inject
-    private PessoaRepositorio pessoaRepositorio;
+    private PessoaRepositorio pessoaRepositorioInject;
     
     @Inject
-    private PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorio;
+    private PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorioInject;
     
     @Inject
-    private CargoVencimentosRepositorio cargoVencimentosRepositorio;
+    private CargoVencimentosRepositorio cargoVencimentosRepositorioInject;
+
+    EntityManager manager = new EntityManagerProducer().createEntityManager();
+    PessoaRepositorio pessoaRepositorio = new PessoaRepositorio(manager);
+    PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
+    CargoVencimentosRepositorio cargoVencimentosRepositorio = new CargoVencimentosRepositorio(manager);
+
 
     @Transactional
     public void calcularERegistrarSalarios() {
-        manager = new EntityManagerProducer().createEntityManager();
-        pessoaRepositorio = new PessoaRepositorio(manager);
-        pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
-
         List<Pessoa> pessoas = pessoaRepositorio.findAll();
 
             pessoas.forEach(pessoa -> {
@@ -56,9 +59,6 @@ public class PessoaSalarioConsolidadoService implements Serializable {
 
     @Transactional
     private void registrarSalarioConsolidado(Pessoa pessoa, Cargo cargo, Integer salario) {
-        manager = new EntityManagerProducer().createEntityManager();
-        pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
-
         PessoaSalarioConsolidado novaPessoaSalarioConsolidado = new PessoaSalarioConsolidado(pessoa, cargo, salario);
 
         pessoaSalarioConsolidadoRepositorio.create(novaPessoaSalarioConsolidado);
@@ -66,9 +66,6 @@ public class PessoaSalarioConsolidadoService implements Serializable {
 
     @Transactional
     public Integer calcularSalario(Pessoa pessoa) {
-		manager = new EntityManagerProducer().createEntityManager();
-		cargoVencimentosRepositorio = new CargoVencimentosRepositorio(manager);
-
         Integer salario = 0;
 
         Cargo cargo = pessoa.getCargo();

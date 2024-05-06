@@ -23,13 +23,13 @@
 
 	<div id="conteudo">
 		<div id="listagem">
-			<p:dataTable var="pessoa_salario_consolidado" value="#{salarioConsolidadoBean.listaPessoasSalariosConsolidados}" paginator="true" rows="10" emptyMessage="">
+			<p:dataTable id="tabelaSalarios" var="pessoa_salario_consolidado" value="#{salarioConsolidadoBean.listaPessoasSalariosConsolidados}" paginator="true" rows="10" emptyMessage="Não há dados para exibir">
 				<f:facet name="header">
 					Lista de Pessoas e Salários
 				</f:facet>
 
 				<p:column headerText="Pessoa ID">
-					<h:outputText value="#{pessoa_salario_consolidado.pessoa}"  />
+					<h:outputText value="#{pessoa_salario_consolidado.pessoa.getNome()}"  />
 				</p:column>
 
 				<p:column headerText="Nome">
@@ -37,7 +37,7 @@
 				</p:column>
 
 				<p:column headerText="Cargo">
-					<h:outputText value="#{pessoa_salario_consolidado.cargo}" />
+					<h:outputText value="#{pessoa_salario_consolidado.cargo.getNome()}" />
 				</p:column>
 
 				<p:column headerText="Salario">
@@ -52,10 +52,9 @@
 		<div id="button">
 			<h:form>
 				<p:messages id="msgs" showDetail="true" />
-				<p:commandButton value="Calcular e Registrar Salários" actionListener="#{salarioConsolidadoBean.calcularERegistrarSalarios()}" />
+				<p:commandButton value="Calcular e Registrar Salários" actionListener="#{salarioConsolidadoBean.calcularERegistrarSalarios()}" oncomplete="atualizarTabelaSalarios();" update="tabelaSalarios" />
 			</h:form>
 		</div>
 	</div>
-
 </h:body>
 </html>

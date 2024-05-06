@@ -2,6 +2,7 @@ package com.esig.joaogdantas.controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import org.primefaces.PrimeFaces;
 
 import com.esig.joaogdantas.model.cargo.Cargo;
 import com.esig.joaogdantas.model.pessoa.Pessoa;
@@ -25,14 +26,15 @@ public class SalarioConsolidadoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @PersistenceContext
     @Inject
-    private EntityManager manager;
+    private EntityManager managerInject;
 
     @Inject
-    private PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorio;
+    private PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorioInject;
 
     @Inject
-    private PessoaSalarioConsolidadoService pessoaSalarioConsolidadoService;
+    private PessoaSalarioConsolidadoService pessoaSalarioConsolidadoServiceInject;
 
     private List<PessoaSalarioConsolidado> listaPessoasSalariosConsolidados;
 
@@ -42,10 +44,11 @@ public class SalarioConsolidadoBean implements Serializable {
     @Inject
     private Cargo cargo;
 
-    public void pessoasCadastradas(){
-        EntityManager manager = new EntityManagerProducer().createEntityManager();
-        pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
+    EntityManager manager = new EntityManagerProducer().createEntityManager();
+    PessoaSalarioConsolidadoRepositorio pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
+    PessoaSalarioConsolidadoService pessoaSalarioConsolidadoService = new PessoaSalarioConsolidadoService();
 
+    public void pessoasCadastradas(){
         listaPessoasSalariosConsolidados = pessoaSalarioConsolidadoRepositorio.findAll();
     }
     public List<PessoaSalarioConsolidado> getListaPessoasSalariosConsolidados(){
@@ -54,12 +57,8 @@ public class SalarioConsolidadoBean implements Serializable {
 
     public void calcularERegistrarSalarios(){
         try {
-
-            EntityManager manager = new EntityManagerProducer().createEntityManager();
-            pessoaSalarioConsolidadoService = new PessoaSalarioConsolidadoService();
-            pessoaSalarioConsolidadoRepositorio = new PessoaSalarioConsolidadoRepositorio(manager);
-
             pessoaSalarioConsolidadoService.calcularERegistrarSalarios();
+            pessoasCadastradas();
         } catch (Exception e){
             FacesContext.getCurrentInstance().addMessage("msgs", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Valores já cadastrados."));
         }

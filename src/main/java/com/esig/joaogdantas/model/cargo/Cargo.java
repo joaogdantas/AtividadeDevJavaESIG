@@ -18,7 +18,7 @@ public class Cargo {
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 	
-    @Column(name = "nome", nullable = false, unique = true, length = 255)
+    @Column(name = "nome", nullable = false, length = 255)
     private String nome;
     
     @OneToMany(mappedBy = "cargo")
@@ -26,6 +26,9 @@ public class Cargo {
     
     @OneToMany(mappedBy = "cargo")
     private List<CargoVencimentos> cargoVencimentos;
+
+	@OneToMany(mappedBy = "cargo")
+	private List<PessoaSalarioConsolidado> pessoaSalarioConsolidados;
     
     public Cargo() {
     }

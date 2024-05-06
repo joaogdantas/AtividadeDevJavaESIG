@@ -17,7 +17,7 @@ public class PessoaSalarioConsolidado {
 	@Column(name = "nome_pessoa")
 	private String nomePessoa;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "nome_cargo", referencedColumnName = "nome")
 	private Cargo cargo;
 

@@ -38,14 +38,25 @@ git clone https://github.com/joaogdantas/AtividadeDevJavaESIG.git
 cd AtividadeDevJavaESIG
 ```
 
-3. Compile o projeto:
+3. Passe as credenciais do banco de dados:
+No arquivo "persistence.xml" que se econtra em: "src/main/resources/META-INF/persistence.xml" passe as credenciais do seu banco de dados PostgreSQL nas linhas 8, 9 e 10.
+```
+<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/atividadeesigdb" />
+<property name="jakarta.persistence.jdbc.user" value="postgres"/>
+<property name="jakarta.persistence.jdbc.password" value="password"/>
+```
+Substitua "atividadeesigdb" pelo nome do seu banco de dados;
+Substitua "postgres" pelo usuario do seu banco de dados;
+Substitua "password" pela senha de acesso ao seu banco de dados.
+
+4. Compile o projeto:
 ```
 mvn package
 ```
 
-4. Implante o arquivo WAR gerado no seu servidor Tomcat(Recomenda-se usar a versão 8.5 do Tomcat, pois versões superiores podem causar problemas de compatibilidade.)
+5. Implante o arquivo WAR gerado no seu servidor Tomcat(Recomenda-se usar a versão 8.5 do Tomcat, pois versões superiores podem causar problemas de compatibilidade.)
 
-5. Acesse a aplicação no navegador web, geralmente em:
+6. Acesse a aplicação no navegador web, geralmente em:
 ```
 http://localhost:8080/nome_do_contexto_da_aplicacao
 ```
